@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "focus-visible/dist/focus-visible";
 import "./index.css";
+import { UserProvider } from "./context/UserContext";
 import { Global, css } from "@emotion/react";
 import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
@@ -20,7 +21,9 @@ ReactDOM.render(
       <ColorModeScript initialColorMode="light" />
       <Global styles={GlobalStyles} />
       <BrowserRouter>
-        <App />
+        <UserProvider>
+          <App />
+        </UserProvider>
       </BrowserRouter>
     </ChakraProvider>
   </React.StrictMode>,

@@ -7,19 +7,25 @@ import Signin from "./pages/Signin";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import { Switch, Route } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+import { useLocation } from "react-router-dom";
 
 function App() {
+  const location = useLocation();
+
   return (
     <div className="App">
       <Navbar />
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/signin" component={Signin} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="*" component={Error} />
-      </Switch>
+      <AnimatePresence exitBeforeEnter initial={false}>
+        <Switch location={location} key={location.pathname}>
+          <Route exact path="/" component={Home} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/signin" component={Signin} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="*" component={Error} />
+        </Switch>
+      </AnimatePresence>
     </div>
   );
 }

@@ -35,7 +35,7 @@ const Home = () => {
         </Text>
         <Text fontSize="md" mt="2">
           Mixr is an abbreviation of/for <Text as="em">Mixer</Text>. Mixr is a
-          React and Firebase based simple social media application. Users can
+          React and Firebase powered simple social media application. Users can
           sign up in just few steps and start using the application. You can
           create a new post, manage your Mixr profile, search new people and
           connect with them. Everything at one place.

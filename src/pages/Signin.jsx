@@ -16,25 +16,25 @@ import { motion } from "framer-motion";
 
 const Signin = () => {
   const [notSmallerScreen] = useMediaQuery("(min-width:600px)");
-  const MotionCenter = motion(Center);
 
   const handleSubmit = (e) => {
     e.preventDefault();
   };
 
   return (
-    <form style={{ width: "100%" }} onSubmit={handleSubmit}>
-      <MotionCenter
-        mt="5"
-        mb="10"
-        initial={{ y: "-200vw" }}
-        animate={{ y: 0 }}
-        transition={{ type: "spring", duration: 1, bounce: "0.2" }}
-      >
-        <VStack w="lg" spacing="5" p={!notSmallerScreen && "5"}>
+    <motion.form
+      style={{ width: "100%" }}
+      onSubmit={handleSubmit}
+      initial={{ y: "200vw" }}
+      animate={{ y: 0 }}
+      exit={{ y: "200vw" }}
+      transition={{ type: "spring", duration: 1, bounce: "0.2" }}
+    >
+      <Center mt="1" mb="5">
+        <VStack w="lg" spacing="5" p={notSmallerScreen ? "10" : "5"}>
           <Text
             textTransform="capitalize"
-            fontSize={notSmallerScreen ? "3xl" : "2xl"}
+            fontSize={notSmallerScreen ? "3xl" : "xl"}
             fontWeight="semibold"
           >
             Sign in to your account
@@ -59,6 +59,7 @@ const Signin = () => {
             w="100%"
             alignSelf="flex-start"
             type="submit"
+            _hover={{ bg: "blue.600", color: "whiteAlpha" }}
           >
             Sign In
           </Button>
@@ -69,8 +70,8 @@ const Signin = () => {
             </Link>
           </Text>
         </VStack>
-      </MotionCenter>
-    </form>
+      </Center>
+    </motion.form>
   );
 };
 

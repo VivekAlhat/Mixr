@@ -16,6 +16,7 @@ const Navbar = () => {
     <Flex w="100%" pr={notSmallerScreen ? "10" : "5"} pt="5">
       <Spacer />
       <IconButton
+        variant="ghost"
         icon={isDark ? <FaSun /> : <FaMoon />}
         onClick={toggleColorMode}
         size="sm"
