@@ -8,14 +8,18 @@ import {
   useColorMode,
   useMediaQuery,
 } from "@chakra-ui/react";
+import { useSession } from "../hooks/useSession";
+import MenuOptions from "./MenuOptions";
 
 const Navbar = () => {
   const [notSmallerScreen] = useMediaQuery("(min-width:600px)");
   const { colorMode, toggleColorMode } = useColorMode();
   const isDark = colorMode === "dark";
 
+  const { user } = useSession();
+
   return (
-    <Flex w="100%" boxShadow="sm" mb="5" p="1">
+    <Flex w="100%" boxShadow="sm" mb="5" p="3">
       <Text
         as={RouteLink}
         to="/"
@@ -27,6 +31,7 @@ const Navbar = () => {
         Mixr
       </Text>
       <Spacer />
+      {!!user && <MenuOptions displayName={user.displayName} />}
       <IconButton
         alignSelf="center"
         mr={notSmallerScreen ? "10" : "5"}
