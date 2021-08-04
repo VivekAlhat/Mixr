@@ -1,11 +1,11 @@
 import { Box, Text } from "@chakra-ui/react";
 
-const Profile = () => {
+const Settings = () => {
   return (
     <Box>
-      <Text>Profile</Text>
+      <Text>Settings</Text>
     </Box>
   );
 };
 
-export default Profile;
+export default Settings;

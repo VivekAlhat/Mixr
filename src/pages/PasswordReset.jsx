@@ -53,12 +53,13 @@ const PasswordReset = () => {
   };
 
   return (
-    <motion.div
+    <motion.form
       style={{ width: "100%" }}
       initial={{ y: "200vw" }}
       animate={{ y: 0 }}
       exit={{ y: "200vw" }}
       transition={{ type: "spring", duration: 1, bounce: "0.2" }}
+      onSubmit={handleClick}
     >
       <Center mt="1" mb="5">
         <VStack w="lg" spacing="5" p={notSmallerScreen ? "10" : "5"}>
@@ -90,7 +91,6 @@ const PasswordReset = () => {
             _hover={{ bg: "blue.600", color: "whiteAlpha" }}
             isLoading={loading ? true : false}
             loadingText="Sending Password Reset Link"
-            onClick={handleClick}
           >
             Reset Password
           </Button>
@@ -99,7 +99,7 @@ const PasswordReset = () => {
           </Link>
         </VStack>
       </Center>
-    </motion.div>
+    </motion.form>
   );
 };
 
