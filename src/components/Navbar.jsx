@@ -21,7 +21,7 @@ const Navbar = () => {
         to="/"
         fontSize="2xl"
         fontWeight="bold"
-        pl="5"
+        ml={notSmallerScreen ? "10" : "5"}
         color={isDark ? "blue.300" : "blue.500"}
       >
         Mixr

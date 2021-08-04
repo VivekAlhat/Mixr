@@ -10,7 +10,7 @@ const ProfileRedirect = ({ component: Component, ...props }) => {
         !user ? (
           <Component {...props} />
         ) : (
-          <Redirect to={{ pathname: "/dashboard" }} from={props.location} />
+          <Redirect to={{ pathname: "/dashboard" }} />
         )
       }
     />
