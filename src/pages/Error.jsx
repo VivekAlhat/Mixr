@@ -2,7 +2,7 @@ import { Box, Text, Image, Center } from "@chakra-ui/react";
 
 const Error = () => {
   return (
-    <Center minHeight="100vh">
+    <Center minHeight="80vh">
       <Box p="5">
         <Image
           src="/assets/page_not_found.svg"
