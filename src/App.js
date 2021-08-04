@@ -6,8 +6,10 @@ import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
+import Settings from "./pages/Settings";
 import PasswordReset from "./pages/PasswordReset";
 import ProfileRedirect from "./HOC/ProfileRedirect";
+import PrivateRoute from "./HOC/PrivateRoute";
 import { Switch, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
@@ -23,8 +25,9 @@ function App() {
           <ProfileRedirect exact path="/" component={Home} />
           <ProfileRedirect path="/signup" component={Signup} />
           <ProfileRedirect path="/signin" component={Signin} />
-          <Route path="/profile" component={Profile} />
-          <Route path="/dashboard" component={Dashboard} />
+          <PrivateRoute path="/profile" component={Profile} />
+          <PrivateRoute path="/dashboard" component={Dashboard} />
+          <PrivateRoute path="/settings" component={Settings} />
           <ProfileRedirect path="/reset" component={PasswordReset} />
           <Route path="*" component={Error} />
         </Switch>
