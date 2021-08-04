@@ -51,7 +51,7 @@ const Signin = () => {
         isClosable: true,
         position: "top-right",
       });
-      history.push("/dashboard");
+      history.push("/profile");
     } catch (err) {
       toast({
         title: err.message,

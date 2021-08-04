@@ -15,14 +15,13 @@ import {
   Button,
   Link,
 } from "@chakra-ui/react";
-import { Link as RouteLink, useHistory } from "react-router-dom";
+import { Link as RouteLink } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { signUp } from "../firebase/auth";
 
 const Signup = () => {
   const toast = useToast();
-  const history = useHistory();
   const [notSmallerScreen] = useMediaQuery("(min-width:600px)");
 
   const [show, setShow] = useState(false);
@@ -65,7 +64,6 @@ const Signup = () => {
           isClosable: true,
           position: "top-right",
         });
-        history.push("/signin");
       }
     } catch (err) {
       toast({
