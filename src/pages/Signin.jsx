@@ -117,6 +117,9 @@ const Signin = () => {
               </InputRightElement>
             </InputGroup>
           </FormControl>
+          <Link to="/reset" as={RouteLink} alignSelf="flex-start">
+            Forgot Password?
+          </Link>
           <Button
             bgColor="blue.500"
             color="whiteAlpha.900"
