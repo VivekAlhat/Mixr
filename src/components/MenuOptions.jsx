@@ -23,7 +23,7 @@ const MenuOptions = ({ displayName }) => {
   return (
     <Menu>
       <MenuButton>
-        <Avatar name={displayName} alignSelf="center" size="sm" mr="5" />
+        <Avatar name={displayName} alignSelf="center" size="sm" mx="5" />
       </MenuButton>
       <MenuList>
         <MenuItem

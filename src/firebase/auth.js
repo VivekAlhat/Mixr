@@ -6,12 +6,10 @@ export const signUp = async ({ fname, lname, email, password, cpassword }) => {
   const user = res.user;
   await user.updateProfile({ displayName: `${fname} ${lname}` });
   await createUserDocument(user);
-  return user;
 };
 
 export const signIn = async ({ email, password }) => {
-  const res = await auth.signInWithEmailAndPassword(email, password);
-  return res.user;
+  await auth.signInWithEmailAndPassword(email, password);
 };
 
 export const signOut = async () => {

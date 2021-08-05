@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { Link as RouteLink, useHistory } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signIn } from "../firebase/auth";
 
 const Signin = () => {
@@ -30,6 +30,16 @@ const Signin = () => {
   });
 
   const [notSmallerScreen] = useMediaQuery("(min-width:600px)");
+
+  useEffect(() => {
+    return () => {
+      setFormData({
+        email: "",
+        password: "",
+      });
+      setLoading(false);
+    };
+  }, []);
 
   const handleClick = () => setShow(!show);
 

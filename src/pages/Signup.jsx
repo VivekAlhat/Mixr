@@ -15,12 +15,13 @@ import {
   Button,
   Link,
 } from "@chakra-ui/react";
-import { Link as RouteLink } from "react-router-dom";
-import { useState } from "react";
+import { Link as RouteLink, useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { signUp } from "../firebase/auth";
 
 const Signup = () => {
+  const history = useHistory();
   const toast = useToast();
   const [notSmallerScreen] = useMediaQuery("(min-width:600px)");
 
@@ -34,6 +35,19 @@ const Signup = () => {
     password: "",
     cpassword: "",
   });
+
+  useEffect(() => {
+    return () => {
+      setFormData({
+        fname: "",
+        lname: "",
+        email: "",
+        password: "",
+        cpassword: "",
+      });
+      setLoading(false);
+    };
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -64,6 +78,9 @@ const Signup = () => {
           isClosable: true,
           position: "top-right",
         });
+        setTimeout(() => {
+          history.push("/profile");
+        }, 300);
       }
     } catch (err) {
       toast({
