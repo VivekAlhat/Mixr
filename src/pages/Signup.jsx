@@ -78,6 +78,13 @@ const Signup = () => {
           isClosable: true,
           position: "top-right",
         });
+        setFormData({
+          fname: "",
+          lname: "",
+          email: "",
+          password: "",
+          cpassword: "",
+        });
         setTimeout(() => {
           history.push("/profile");
         }, 300);
@@ -89,14 +96,10 @@ const Signup = () => {
         isClosable: true,
         position: "top-right",
       });
-    } finally {
-      setFormData({
-        fname: "",
-        lname: "",
-        email: "",
-        password: "",
-        cpassword: "",
+      setFormData((prev) => {
+        return { ...prev };
       });
+    } finally {
       setLoading(false);
     }
   };
