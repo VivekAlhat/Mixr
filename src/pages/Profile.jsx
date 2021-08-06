@@ -1,26 +1,21 @@
 import {
   VStack,
   Avatar,
+  Divider,
   Center,
   Text,
-  Divider,
   Spinner,
-  useMediaQuery,
   Flex,
-  Link,
-  Icon,
   HStack,
+  useMediaQuery,
+  Icon,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import {
-  FaInstagram,
-  FaGithub,
-  FaFacebook,
-  FaTwitter,
-  FaExternalLinkAlt,
-} from "react-icons/fa";
+import { FaInstagram, FaFacebook, FaTwitter } from "react-icons/fa";
 import { useSession } from "../hooks/useSession";
+import { MdLocationCity } from "react-icons/md";
 import { db } from "../firebase/firebase";
+import SocialLink from "../components/SocialLink";
 
 const Profile = () => {
   const { user } = useSession();
@@ -32,128 +27,66 @@ const Profile = () => {
     docRef
       .get()
       .then((document) => document.exists && setUserProfile(document.data()));
+
+    return () => {
+      setUserProfile(null);
+    };
   }, [user.uid]);
 
   return !!userProfile ? (
-    <VStack w="lg" spacing="5" p={!notSmallerScreen && "5"} width="100%">
-      <VStack w={notSmallerScreen ? "3xl" : "full"}>
-        <Flex direction="column" align="center" p="5">
+    <VStack>
+      <Center>
+        <Flex
+          direction={notSmallerScreen ? "row" : "column"}
+          p="5"
+          align="center"
+        >
           <Avatar
+            alignSelf={!notSmallerScreen && "center"}
             name={userProfile.name}
             size={notSmallerScreen ? "2xl" : "xl"}
             mb="3"
+            mr={notSmallerScreen && "10"}
           />
-          <Text fontSize="4xl" fontWeight="bold" mb="3">
-            {userProfile.name}
-          </Text>
-          {userProfile.bio && (
-            <Text align="center" mb="3">
-              {userProfile.bio}
+          <VStack
+            align={notSmallerScreen ? "flex-start" : "center"}
+            spacing="5"
+            px="5"
+          >
+            <Text fontSize="4xl" fontWeight="bold">
+              {userProfile.name}
             </Text>
-          )}
-          <HStack spacing="10" mt="5">
-            {userProfile.instagram && (
-              <Link
-                href={`https://www.instagram.com/${userProfile.instagram}`}
-                isExternal
-              >
-                <Icon
-                  as={FaInstagram}
-                  w={5}
-                  h={5}
-                  _hover={{ color: "blue.400" }}
-                />
-              </Link>
+            {userProfile.bio && <Text align="center">{userProfile.bio}</Text>}
+            {userProfile.location && (
+              <HStack>
+                <Icon as={MdLocationCity} />
+                <Text>{userProfile.location}</Text>
+              </HStack>
             )}
-            {userProfile.facebook && (
-              <Link
-                href={`https://www.facebook.com/${userProfile.facebook}`}
-                isExternal
-              >
-                <Icon
-                  as={FaFacebook}
-                  w={5}
-                  h={5}
-                  _hover={{ color: "blue.400" }}
+            <HStack spacing="10">
+              {userProfile.instagram && (
+                <SocialLink
+                  url={`https://www.instagram.com/${userProfile.instagram}`}
+                  icon={FaInstagram}
                 />
-              </Link>
-            )}
-            {userProfile.twitter && (
-              <Link
-                href={`https://www.twitter.com/${userProfile.twitter}`}
-                isExternal
-              >
-                <Icon
-                  as={FaTwitter}
-                  w={5}
-                  h={5}
-                  _hover={{ color: "blue.400" }}
+              )}
+              {userProfile.facebook && (
+                <SocialLink
+                  url={`https://www.facebook.com/${userProfile.facebook}`}
+                  icon={FaFacebook}
                 />
-              </Link>
-            )}
-            {userProfile.github && (
-              <Link
-                href={`https://www.github.com/${userProfile.github}`}
-                isExternal
-              >
-                <Icon
-                  as={FaGithub}
-                  w={5}
-                  h={5}
-                  _hover={{ color: "blue.400" }}
+              )}
+              {userProfile.twitter && (
+                <SocialLink
+                  url={`https://www.twitter.com/${userProfile.twitter}`}
+                  icon={FaTwitter}
                 />
-              </Link>
-            )}
-            {userProfile.website && (
-              <Link href={`https://${userProfile.website}`} isExternal>
-                <Icon
-                  as={FaExternalLinkAlt}
-                  w={5}
-                  h={5}
-                  _hover={{ color: "blue.400" }}
-                />
-              </Link>
-            )}
-          </HStack>
+              )}
+            </HStack>
+          </VStack>
         </Flex>
-      </VStack>
+      </Center>
       <Divider />
-      <Flex
-        width="100%"
-        justify="space-around"
-        direction={notSmallerScreen ? "row" : "column"}
-      >
-        {userProfile.work && (
-          <VStack p="5">
-            <Text fontSize="lg" fontWeight="semibold">
-              Work
-            </Text>
-            <Text fontSize="md" align="center">
-              {userProfile.work}
-            </Text>
-          </VStack>
-        )}
-        {userProfile.education && (
-          <VStack p="5">
-            <Text fontSize="lg" fontWeight="semibold">
-              Education
-            </Text>
-            <Text fontSize="md" align="center">
-              {userProfile.education}
-            </Text>
-          </VStack>
-        )}
-        {userProfile.location && (
-          <VStack p="5">
-            <Text fontSize="lg" fontWeight="semibold">
-              Location
-            </Text>
-            <Text fontSize="md" align="center">
-              {userProfile.location}
-            </Text>
-          </VStack>
-        )}
-      </Flex>
     </VStack>
   ) : (
     <Center height="80vh">

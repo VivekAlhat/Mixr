@@ -8,13 +8,9 @@ export const createUserDocument = async (user) => {
     email: user.email,
     bio: "",
     location: "",
-    work: "",
-    education: "",
-    website: "",
     instagram: "",
     facebook: "",
     twitter: "",
-    github: "",
   };
   return await docRef.set(userProfile);
 };
