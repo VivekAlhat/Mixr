@@ -1,12 +1,26 @@
-import { Box, HStack, Icon, Text } from "@chakra-ui/react";
-import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
-import { MdDelete } from "react-icons/md";
+import {
+  Avatar,
+  Box,
+  HStack,
+  Icon,
+  Text,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  useMediaQuery,
+  Spacer,
+} from "@chakra-ui/react";
+import { AiFillLike, AiFillDislike } from "react-icons/ai";
+import { MdMoreHoriz } from "react-icons/md";
 import { db } from "../firebase/firebase";
 import { useSession } from "../hooks/useSession";
 import moment from "moment";
 
 const Post = ({ post }) => {
   const { user } = useSession();
+  const [notSmallerScreen] = useMediaQuery("(min-width:600px)");
 
   const deletePost = async () => {
     await db.doc(`posts/${post.id}`).delete();
@@ -16,16 +30,27 @@ const Post = ({ post }) => {
     <Box
       alignItems="flex-start"
       p="5"
-      border="1px"
-      borderRadius="md"
-      borderColor="gray.200"
-      w="full"
+      boxShadow="md"
+      w={notSmallerScreen ? "5xl" : "full"}
     >
-      <Text>{post.postContent}</Text>
-      <HStack spacing="10" mt="5">
+      <HStack spacing="5">
+        <Avatar name={post.createdBy.name} size="md" />
+        <Box>
+          <Text fontSize="lg" fontWeight="semibold">
+            {post.createdBy.name}
+          </Text>
+          <Text as="em" fontSize="sm">
+            {moment(post.createdAt.toDate()).format("LLL")}
+          </Text>
+        </Box>
+      </HStack>
+      <Text mt="5">{post.postContent}</Text>
+      <HStack spacing="10" mt="5" align="center">
         <HStack align="center" spacing="2">
           <Icon
-            as={AiOutlineLike}
+            as={AiFillLike}
+            w="5"
+            h="5"
             _hover={{ color: "green" }}
             cursor="pointer"
           />
@@ -33,30 +58,29 @@ const Post = ({ post }) => {
         </HStack>
         <HStack align="center" spacing="2">
           <Icon
-            as={AiOutlineDislike}
+            as={AiFillDislike}
+            w="5"
+            h="5"
             _hover={{ color: "red" }}
             cursor="pointer"
           />
           <Text>{post.dislikes}</Text>
         </HStack>
+        <Spacer />
+        {post.createdBy.uid === user.uid && (
+          <Menu isLazy>
+            <MenuButton
+              as={IconButton}
+              aria-label="Options"
+              icon={<MdMoreHoriz />}
+              variant="ghost"
+            />
+            <MenuList>
+              <MenuItem onClick={deletePost}>Delete</MenuItem>
+            </MenuList>
+          </Menu>
+        )}
       </HStack>
-      <Box>
-        <Text mt="5">Posted By: {post.createdBy.name}</Text>
-        <Text mt="5">
-          Created on {moment(post.createdAt.toDate()).format("ll")}
-        </Text>
-      </Box>
-      {post.createdBy.uid === user.uid && (
-        <Icon
-          as={MdDelete}
-          w="5"
-          h="5"
-          alignSelf="center"
-          cursor="pointer"
-          onClick={deletePost}
-          _hover={{ color: "red" }}
-        />
-      )}
     </Box>
   );
 };

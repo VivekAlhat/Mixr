@@ -24,18 +24,18 @@ const Posts = () => {
   }, []);
 
   return loading ? (
-    <Center height="60vh" alignSelf="center">
+    <Center height="80vh" alignSelf="center">
       <Spinner />
     </Center>
   ) : posts.length > 0 ? (
-    <VStack spacing="5" p={notSmallerScreen ? "5" : "2"} w="full">
+    <VStack spacing="5" p={!notSmallerScreen && "5"} w="full" m="-2">
       {posts.map((post) => (
         <Post key={post.id} post={post} />
       ))}
     </VStack>
   ) : (
-    <Center height="60vh" alignSelf="center">
-      <Text>Posts collection is empty. Create a new post.</Text>
+    <Center height="80vh">
+      <Text>Nothing to display. Create your first post.</Text>
     </Center>
   );
 };

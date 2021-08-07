@@ -2,23 +2,24 @@ import {
   Box,
   Textarea,
   Button,
+  VStack,
   Modal,
   ModalOverlay,
   ModalContent,
-  useMediaQuery,
+  Text,
   useToast,
   useDisclosure,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { db } from "../firebase/firebase";
 import { useSession } from "../hooks/useSession";
-import { MdCreate } from "react-icons/md";
 
 const CreatePost = () => {
-  const [notSmallerScreen] = useMediaQuery("(min-width:600px)");
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [postContent, setPostContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const [notSmallerScreen] = useMediaQuery("(min-width:600px)");
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { user } = useSession();
   const toast = useToast();
 
@@ -29,6 +30,9 @@ const CreatePost = () => {
   const createPost = async () => {
     try {
       setLoading(true);
+      if (postContent.length < 5) {
+        throw new Error("Post should contain atleast 5 characters");
+      }
       const post = {
         postContent,
         likes: 0,
@@ -41,15 +45,11 @@ const CreatePost = () => {
         },
       };
       await db.collection("posts").add(post);
-      toast({
-        title: "Created a new post",
-        status: "success",
-        position: "top-right",
-      });
     } catch (err) {
       toast({
         title: err.message,
         status: "error",
+        isClosable: true,
         position: "top-right",
       });
     } finally {
@@ -60,29 +60,25 @@ const CreatePost = () => {
   };
 
   return (
-    <>
-      <Button
-        onClick={onOpen}
-        colorScheme="blue"
-        leftIcon={<MdCreate />}
-        alignSelf={notSmallerScreen ? "flex-end" : "center"}
-        mx="5"
-      >
-        Compose
+    <VStack alignSelf="center">
+      <Button onClick={onOpen} size={notSmallerScreen ? "md" : "sm"}>
+        Write Post
       </Button>
       <Modal
         onClose={onClose}
         isOpen={isOpen}
         isCentered
-        size="xl"
+        size="lg"
         motionPreset="slideInBottom"
       >
         <ModalOverlay />
-        <ModalContent p="5" m="5" borderRadius="none">
-          <Box>
+        <ModalContent p="4" m="3">
+          <Text fontSize="lg" fontWeight="semibold" align="center" mb="3">
+            Post Something
+          </Text>
+          <Box mt="5">
             <Textarea
               resize="none"
-              size="lg"
               placeholder="What's on your mind?"
               rows="5"
               autoComplete="off"
@@ -90,7 +86,7 @@ const CreatePost = () => {
               onChange={handleChange}
             />
             <Button
-              w="full"
+              float="right"
               mt="5"
               colorScheme="blue"
               onClick={createPost}
@@ -102,7 +98,7 @@ const CreatePost = () => {
           </Box>
         </ModalContent>
       </Modal>
-    </>
+    </VStack>
   );
 };
 
