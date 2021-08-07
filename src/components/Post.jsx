@@ -4,18 +4,14 @@ import {
   HStack,
   Icon,
   Text,
-  IconButton,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   useMediaQuery,
   Spacer,
 } from "@chakra-ui/react";
 import { AiFillLike, AiFillDislike } from "react-icons/ai";
-import { MdMoreHoriz } from "react-icons/md";
+import { MdMoreHoriz, MdComment } from "react-icons/md";
 import { db } from "../firebase/firebase";
 import { useSession } from "../hooks/useSession";
+import DeleteAlert from "./DeleteAlert";
 import moment from "moment";
 
 const Post = ({ post }) => {
@@ -51,7 +47,7 @@ const Post = ({ post }) => {
             as={AiFillLike}
             w="5"
             h="5"
-            _hover={{ color: "green" }}
+            _hover={{ color: "green.400" }}
             cursor="pointer"
           />
           <Text>{post.likes}</Text>
@@ -61,24 +57,18 @@ const Post = ({ post }) => {
             as={AiFillDislike}
             w="5"
             h="5"
-            _hover={{ color: "red" }}
+            _hover={{ color: "red.400" }}
             cursor="pointer"
           />
           <Text>{post.dislikes}</Text>
         </HStack>
+        <HStack align="center" spacing="2">
+          <Icon as={MdComment} w="5" h="5" cursor="pointer" />
+          <Text>{post.comments}</Text>
+        </HStack>
         <Spacer />
         {post.createdBy.uid === user.uid && (
-          <Menu isLazy>
-            <MenuButton
-              as={IconButton}
-              aria-label="Options"
-              icon={<MdMoreHoriz />}
-              variant="ghost"
-            />
-            <MenuList>
-              <MenuItem onClick={deletePost}>Delete</MenuItem>
-            </MenuList>
-          </Menu>
+          <DeleteAlert icon={<MdMoreHoriz />} deletePost={deletePost} />
         )}
       </HStack>
     </Box>
