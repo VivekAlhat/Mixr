@@ -73,10 +73,10 @@ const CreatePost = () => {
       >
         <ModalOverlay />
         <ModalContent p="4" m="3">
-          <Text fontSize="lg" fontWeight="semibold" align="center" mb="3">
+          <Text fontSize="lg" fontWeight="semibold" align="center">
             Post Something
           </Text>
-          <Box mt="5">
+          <Box mt="3">
             <Textarea
               resize="none"
               placeholder="What's on your mind?"
@@ -87,7 +87,7 @@ const CreatePost = () => {
             />
             <Button
               float="right"
-              mt="5"
+              mt="3"
               colorScheme="blue"
               onClick={createPost}
               isLoading={loading ? true : false}

@@ -5,7 +5,6 @@ import {
   Icon,
   Text,
   useMediaQuery,
-  Spacer,
 } from "@chakra-ui/react";
 import { AiFillLike, AiFillDislike } from "react-icons/ai";
 import { MdMoreHoriz, MdComment } from "react-icons/md";
@@ -41,7 +40,7 @@ const Post = ({ post }) => {
         </Box>
       </HStack>
       <Text mt="5">{post.postContent}</Text>
-      <HStack spacing="10" mt="5" align="center">
+      <HStack spacing="7" mt="5" align="center">
         <HStack align="center" spacing="2">
           <Icon
             as={AiFillLike}
@@ -66,7 +65,6 @@ const Post = ({ post }) => {
           <Icon as={MdComment} w="5" h="5" cursor="pointer" />
           <Text>{post.comments}</Text>
         </HStack>
-        <Spacer />
         {post.createdBy.uid === user.uid && (
           <DeleteAlert icon={<MdMoreHoriz />} deletePost={deletePost} />
         )}

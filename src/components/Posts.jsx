@@ -28,7 +28,7 @@ const Posts = () => {
       <Spinner />
     </Center>
   ) : posts.length > 0 ? (
-    <VStack spacing="5" p={!notSmallerScreen && "5"} w="full" m="-2">
+    <VStack spacing="5" p={!notSmallerScreen && "5"} w="full" mt="-2">
       {posts.map((post) => (
         <Post key={post.id} post={post} />
       ))}

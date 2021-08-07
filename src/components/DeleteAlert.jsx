@@ -13,6 +13,7 @@ import {
   AlertDialogHeader,
   AlertDialogFooter,
 } from "@chakra-ui/react";
+import { MdDelete } from "react-icons/md";
 
 const DeleteAlert = ({ icon, deletePost }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +22,7 @@ const DeleteAlert = ({ icon, deletePost }) => {
 
   return (
     <>
-      <Menu isLazy>
+      <Menu>
         <MenuButton
           as={IconButton}
           aria-label="Options"
@@ -29,7 +30,9 @@ const DeleteAlert = ({ icon, deletePost }) => {
           variant="ghost"
         />
         <MenuList>
-          <MenuItem onClick={() => setIsOpen(true)}>Delete</MenuItem>
+          <MenuItem icon={<MdDelete />} onClick={() => setIsOpen(true)}>
+            Delete
+          </MenuItem>
         </MenuList>
       </Menu>
 
@@ -39,7 +42,7 @@ const DeleteAlert = ({ icon, deletePost }) => {
         onClose={onClose}
       >
         <AlertDialogOverlay>
-          <AlertDialogContent>
+          <AlertDialogContent mx="5">
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               Delete Post
             </AlertDialogHeader>
