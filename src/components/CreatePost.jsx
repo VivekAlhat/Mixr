@@ -35,9 +35,9 @@ const CreatePost = () => {
       }
       const post = {
         postContent,
-        likes: 0,
-        dislikes: 0,
-        comments: 0,
+        likes: [],
+        dislikes: [],
+        comments: [],
         createdAt: new Date(),
         createdBy: {
           uid: user.uid,

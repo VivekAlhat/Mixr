@@ -42,7 +42,7 @@ const Home = () => {
         </Text>
         <Link to="/signin">
           <Button mt="5" colorScheme="blue">
-            Create Your Free Account
+            Get Started
           </Button>
         </Link>
       </Box>
