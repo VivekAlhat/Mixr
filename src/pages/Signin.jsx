@@ -16,14 +16,16 @@ import {
 } from "@chakra-ui/react";
 import { Link as RouteLink, useHistory } from "react-router-dom";
 import { motion } from "framer-motion";
+import { FaGoogle } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { signIn } from "../firebase/auth";
+import { signIn, signInWithGoogle } from "../firebase/auth";
 
 const Signin = () => {
   const toast = useToast();
   const history = useHistory();
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [googleSign, setgoogleSign] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -48,6 +50,29 @@ const Signin = () => {
     setFormData((prev) => {
       return { ...prev, [name]: value };
     });
+  };
+
+  const googleSignIn = async () => {
+    try {
+      setgoogleSign(true);
+      await signInWithGoogle();
+      toast({
+        title: "Signed in successfully!",
+        status: "success",
+        isClosable: true,
+        position: "top-right",
+      });
+      history.push("/profile");
+    } catch (err) {
+      toast({
+        title: err.message,
+        status: "error",
+        isClosable: true,
+        position: "top-right",
+      });
+    } finally {
+      setgoogleSign(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -141,6 +166,19 @@ const Signin = () => {
             loadingText="Signing In"
           >
             Sign In
+          </Button>
+          <Button
+            rightIcon={<FaGoogle />}
+            bgColor="red.500"
+            color="whiteAlpha.900"
+            w="100%"
+            alignSelf="flex-start"
+            _hover={{ bg: "red.600", color: "whiteAlpha" }}
+            isLoading={googleSign ? true : false}
+            loadingText="Signing In"
+            onClick={googleSignIn}
+          >
+            Sign In With Google
           </Button>
           <Text fontSize="md">
             Don't have an account?&nbsp;

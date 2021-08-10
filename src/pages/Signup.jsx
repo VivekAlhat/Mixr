@@ -85,9 +85,7 @@ const Signup = () => {
           password: "",
           cpassword: "",
         });
-        setTimeout(() => {
-          history.push("/profile");
-        }, 300);
+        history.push("/profile");
       }
     } catch (err) {
       toast({

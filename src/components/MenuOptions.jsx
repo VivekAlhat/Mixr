@@ -12,7 +12,7 @@ import { MdSettings, MdDashboard } from "react-icons/md";
 import { FaSignOutAlt } from "react-icons/fa";
 import { signOut } from "../firebase/auth";
 
-const MenuOptions = ({ displayName }) => {
+const MenuOptions = ({ displayName, photoURL }) => {
   const history = useHistory();
 
   const handleClick = async () => {
@@ -23,7 +23,13 @@ const MenuOptions = ({ displayName }) => {
   return (
     <Menu>
       <MenuButton>
-        <Avatar name={displayName} alignSelf="center" size="sm" mx="5" />
+        <Avatar
+          name={displayName}
+          src={!!photoURL && photoURL}
+          alignSelf="center"
+          size="sm"
+          mx="5"
+        />
       </MenuButton>
       <MenuList>
         <MenuItem

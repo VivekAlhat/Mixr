@@ -30,7 +30,9 @@ const Navbar = () => {
       </HStack>
       <Spacer />
       {!!user && <CreatePost />}
-      {!!user && <MenuOptions displayName={user.displayName} />}
+      {!!user && (
+        <MenuOptions displayName={user.displayName} photoURL={user.photoURL} />
+      )}
       <IconButton
         alignSelf="center"
         mr="3"

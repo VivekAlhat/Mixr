@@ -55,7 +55,11 @@ const Post = ({ post }) => {
       w={notSmallerScreen ? "5xl" : "full"}
     >
       <HStack spacing="5">
-        <Avatar name={post.createdBy.name} size="md" />
+        <Avatar
+          name={post.createdBy.name}
+          src={!!post.createdBy.photoURL && post.createdBy.photoURL}
+          size="md"
+        />
         <Box>
           <Text fontSize="lg" fontWeight="semibold">
             {post.createdBy.name}

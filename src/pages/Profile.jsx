@@ -1,7 +1,6 @@
 import {
   VStack,
   Avatar,
-  Divider,
   Center,
   Text,
   Spinner,
@@ -15,6 +14,7 @@ import { FaInstagram, FaFacebook, FaTwitter } from "react-icons/fa";
 import { useSession } from "../hooks/useSession";
 import { MdLocationCity } from "react-icons/md";
 import { db } from "../firebase/firebase";
+import moment from "moment";
 import SocialLink from "../components/SocialLink";
 
 const Profile = () => {
@@ -35,58 +35,50 @@ const Profile = () => {
 
   return !!userProfile ? (
     <VStack>
-      <Center>
-        <Flex
-          direction={notSmallerScreen ? "row" : "column"}
-          p="5"
-          align="center"
-        >
-          <Avatar
-            alignSelf={!notSmallerScreen && "center"}
-            name={userProfile.name}
-            size={notSmallerScreen ? "2xl" : "xl"}
-            mb="3"
-            mr={notSmallerScreen && "10"}
-          />
-          <VStack
-            align={notSmallerScreen ? "flex-start" : "center"}
-            spacing="5"
-            px="5"
-          >
-            <Text fontSize="4xl" fontWeight="bold">
-              {userProfile.name}
-            </Text>
-            {userProfile.bio && <Text align="center">{userProfile.bio}</Text>}
-            {userProfile.location && (
-              <HStack>
-                <Icon as={MdLocationCity} />
-                <Text>{userProfile.location}</Text>
-              </HStack>
-            )}
-            <HStack spacing="10">
-              {userProfile.instagram && (
-                <SocialLink
-                  url={`https://www.instagram.com/${userProfile.instagram}`}
-                  icon={FaInstagram}
-                />
-              )}
-              {userProfile.facebook && (
-                <SocialLink
-                  url={`https://www.facebook.com/${userProfile.facebook}`}
-                  icon={FaFacebook}
-                />
-              )}
-              {userProfile.twitter && (
-                <SocialLink
-                  url={`https://www.twitter.com/${userProfile.twitter}`}
-                  icon={FaTwitter}
-                />
-              )}
+      <Flex direction="column" align="center" justify="center">
+        <Avatar
+          name={userProfile.displayName}
+          src={!!userProfile.photoURL && userProfile.photoURL}
+          size={notSmallerScreen ? "2xl" : "xl"}
+          mb="3"
+        />
+        <VStack spacing="5">
+          <Text fontSize="4xl" fontWeight="bold">
+            {userProfile.displayName}
+          </Text>
+          {userProfile.bio && <Text align="center">{userProfile.bio}</Text>}
+          {userProfile.location && (
+            <HStack>
+              <Icon as={MdLocationCity} />
+              <Text>{userProfile.location}</Text>
             </HStack>
-          </VStack>
-        </Flex>
-      </Center>
-      <Divider />
+          )}
+          <HStack spacing="10">
+            {userProfile.instagram && (
+              <SocialLink
+                url={`https://www.instagram.com/${userProfile.instagram}`}
+                icon={FaInstagram}
+              />
+            )}
+            {userProfile.facebook && (
+              <SocialLink
+                url={`https://www.facebook.com/${userProfile.facebook}`}
+                icon={FaFacebook}
+              />
+            )}
+            {userProfile.twitter && (
+              <SocialLink
+                url={`https://www.twitter.com/${userProfile.twitter}`}
+                icon={FaTwitter}
+              />
+            )}
+          </HStack>
+          <Text>
+            Member Since:{" "}
+            {moment(userProfile.createdAt.toDate(), "YYYYMMDD").fromNow()}
+          </Text>
+        </VStack>
+      </Flex>
     </VStack>
   ) : (
     <Center height="80vh">
