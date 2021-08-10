@@ -1,4 +1,4 @@
-import { auth } from "../firebase/firebase";
+import firebase, { auth } from "../firebase/firebase";
 import { createUserDocument } from "./user";
 
 export const signUp = async ({ fname, lname, email, password, cpassword }) => {
@@ -19,3 +19,8 @@ export const signOut = async () => {
 export const passwordReset = async (email) => {
   return await auth.sendPasswordResetEmail(email);
 };
+
+export const provider = new firebase.auth.GoogleAuthProvider();
+provider.setCustomParameters({ prompt: "select_account" });
+
+export const signInWithGoogle = () => auth.signInWithPopup(provider);
