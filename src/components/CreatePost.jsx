@@ -46,6 +46,12 @@ const CreatePost = () => {
         },
       };
       await db.collection("posts").add(post);
+      toast({
+        title: "You created a new post",
+        status: "success",
+        isClosable: true,
+        position: "top-right",
+      });
     } catch (err) {
       toast({
         title: err.message,

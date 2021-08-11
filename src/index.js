@@ -4,6 +4,7 @@ import App from "./App";
 import "focus-visible/dist/focus-visible";
 import "./index.css";
 import { UserProvider } from "./context/UserContext";
+import { PostsProvider } from "./context/PostsContext";
 import { Global, css } from "@emotion/react";
 import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
@@ -22,7 +23,9 @@ ReactDOM.render(
       <Global styles={GlobalStyles} />
       <BrowserRouter>
         <UserProvider>
-          <App />
+          <PostsProvider>
+            <App />
+          </PostsProvider>
         </UserProvider>
       </BrowserRouter>
     </ChakraProvider>
