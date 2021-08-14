@@ -68,8 +68,12 @@ const CreatePost = () => {
 
   return (
     <VStack alignSelf="center">
-      <Button onClick={onOpen} size={notSmallerScreen ? "md" : "sm"}>
-        Write Post
+      <Button
+        onClick={onOpen}
+        size={notSmallerScreen ? "md" : "sm"}
+        colorScheme="blue"
+      >
+        Create Post
       </Button>
       <Modal
         onClose={onClose}

@@ -8,6 +8,7 @@ import {
   HStack,
   useMediaQuery,
   Icon,
+  Divider,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { FaInstagram, FaFacebook, FaTwitter } from "react-icons/fa";
@@ -16,6 +17,7 @@ import { MdLocationCity } from "react-icons/md";
 import { db } from "../firebase/firebase";
 import moment from "moment";
 import SocialLink from "../components/SocialLink";
+import UserPosts from "../components/UserPosts";
 
 const Profile = () => {
   const { user } = useSession();
@@ -42,7 +44,7 @@ const Profile = () => {
           size={notSmallerScreen ? "2xl" : "xl"}
           mb="3"
         />
-        <VStack spacing="5">
+        <VStack spacing="3">
           <Text fontSize="4xl" fontWeight="bold">
             {userProfile.displayName}
           </Text>
@@ -53,6 +55,10 @@ const Profile = () => {
               <Text>{userProfile.location}</Text>
             </HStack>
           )}
+          <Text>
+            Member Since:{" "}
+            {moment(userProfile.createdAt.toDate(), "YYYYMMDD").fromNow()}
+          </Text>
           <HStack spacing="10">
             {userProfile.instagram && (
               <SocialLink
@@ -73,11 +79,9 @@ const Profile = () => {
               />
             )}
           </HStack>
-          <Text>
-            Member Since:{" "}
-            {moment(userProfile.createdAt.toDate(), "YYYYMMDD").fromNow()}
-          </Text>
         </VStack>
+        <Divider mt="5" />
+        <UserPosts />
       </Flex>
     </VStack>
   ) : (
