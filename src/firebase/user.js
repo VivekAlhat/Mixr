@@ -27,8 +27,12 @@ export const createUserDocument = async (user) => {
   return getUserDocument(user.uid);
 };
 
-export const getUserDocument = async (uid) => {
+export const getUserDocument = (uid) => {
   if (!uid) return null;
-  const docRef = db.doc(`/users/${uid}`).get();
-  return { uid, ...(await docRef).data() };
+  return db.doc(`/users/${uid}`);
+};
+
+export const updateUserDocument = async (uid, formData) => {
+  const docRef = db.collection("users").doc(uid);
+  return await docRef.update(formData);
 };

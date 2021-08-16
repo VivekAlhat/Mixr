@@ -10,8 +10,16 @@ export const UserProvider = (props) => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (userAuth) => {
-      const user = await createUserDocument(userAuth);
-      setSession({ loading: false, user });
+      if (userAuth) {
+        const userRef = await createUserDocument(userAuth);
+        userRef.onSnapshot((snapshot) =>
+          setSession({
+            loading: false,
+            user: { uid: snapshot.id, ...snapshot.data() },
+          })
+        );
+      }
+      setSession({ loading: false, user: userAuth });
     });
 
     return () => unsubscribe();

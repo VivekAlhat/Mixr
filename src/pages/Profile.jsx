@@ -8,7 +8,6 @@ import {
   HStack,
   useMediaQuery,
   Icon,
-  Divider,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { FaInstagram, FaFacebook, FaTwitter } from "react-icons/fa";
@@ -44,7 +43,7 @@ const Profile = () => {
           size={notSmallerScreen ? "2xl" : "xl"}
           mb="3"
         />
-        <VStack spacing="3">
+        <VStack spacing="5" maxW={notSmallerScreen ? "xl" : "full"} px="5">
           <Text fontSize="4xl" fontWeight="bold">
             {userProfile.displayName}
           </Text>
@@ -80,7 +79,6 @@ const Profile = () => {
             )}
           </HStack>
         </VStack>
-        <Divider mt="5" />
         <UserPosts />
       </Flex>
     </VStack>

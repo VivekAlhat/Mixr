@@ -5,6 +5,7 @@ import {
   Icon,
   Text,
   useMediaQuery,
+  useColorMode,
 } from "@chakra-ui/react";
 import { AiFillLike, AiFillDislike } from "react-icons/ai";
 import { MdMoreHoriz, MdComment } from "react-icons/md";
@@ -15,6 +16,8 @@ import moment from "moment";
 
 const Post = ({ post }) => {
   const { user } = useSession();
+  const { colorMode } = useColorMode();
+  const isDark = colorMode === "dark";
   const [notSmallerScreen] = useMediaQuery("(min-width:600px)");
 
   const deletePost = async () => {
@@ -51,8 +54,10 @@ const Post = ({ post }) => {
     <Box
       alignItems="flex-start"
       p="5"
-      boxShadow="md"
       w={notSmallerScreen ? "5xl" : "full"}
+      boxShadow={isDark && "md"}
+      backgroundColor={!isDark && "ghostwhite"}
+      border={!isDark && "1px solid lightgray"}
     >
       <HStack spacing="5">
         <Avatar

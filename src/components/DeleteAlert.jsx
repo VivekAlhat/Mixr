@@ -43,7 +43,7 @@ const DeleteAlert = ({ icon, deletePost }) => {
       >
         <AlertDialogOverlay>
           <AlertDialogContent mx="5">
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+            <AlertDialogHeader fontSize="lg" fontWeight="bold" mb="-2">
               Delete Post
             </AlertDialogHeader>
 

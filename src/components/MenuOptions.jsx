@@ -31,7 +31,7 @@ const MenuOptions = ({ displayName, photoURL }) => {
           mx="5"
         />
       </MenuButton>
-      <MenuList>
+      <MenuList border="transparent">
         <MenuItem
           px="5"
           fontWeight="bold"
