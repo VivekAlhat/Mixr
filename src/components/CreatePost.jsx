@@ -41,8 +41,6 @@ const CreatePost = () => {
         createdAt: new Date(),
         createdBy: {
           uid: user.uid,
-          name: user.displayName,
-          photoURL: user.photoURL,
         },
       };
       await db.collection("posts").add(post);

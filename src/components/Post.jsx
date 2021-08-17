@@ -7,6 +7,7 @@ import {
   useMediaQuery,
   useColorMode,
 } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
 import { AiFillLike, AiFillDislike } from "react-icons/ai";
 import { MdMoreHoriz, MdComment } from "react-icons/md";
 import firebase, { db } from "../firebase/firebase";
@@ -19,6 +20,17 @@ const Post = ({ post }) => {
   const { colorMode } = useColorMode();
   const isDark = colorMode === "dark";
   const [notSmallerScreen] = useMediaQuery("(min-width:600px)");
+  const [author, setAuthor] = useState({ displayName: "", photoURL: "" });
+
+  useEffect(() => {
+    db.collection("users")
+      .doc(post.createdBy.uid)
+      .get()
+      .then((doc) => setAuthor(doc.data()))
+      .catch((err) => console.log(err));
+
+    return () => setAuthor(null);
+  }, [post.createdBy.uid]);
 
   const deletePost = async () => {
     await db.doc(`posts/${post.id}`).delete();
@@ -61,13 +73,13 @@ const Post = ({ post }) => {
     >
       <HStack spacing="5">
         <Avatar
-          name={post.createdBy.name}
-          src={!!post.createdBy.photoURL && post.createdBy.photoURL}
+          name={author.displayName}
+          src={!!author.photoURL && author.photoURL}
           size="md"
         />
         <Box>
           <Text fontSize="lg" fontWeight="semibold">
-            {post.createdBy.name}
+            {author.displayName}
           </Text>
           <Text as="em" fontSize="sm">
             {moment(post.createdAt.toDate()).format("LLL")}

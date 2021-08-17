@@ -6,22 +6,31 @@ import {
   Spinner,
   Flex,
   HStack,
-  useMediaQuery,
   Icon,
+  Input,
+  VisuallyHidden,
+  useMediaQuery,
+  useToast,
+  Button,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { FaInstagram, FaFacebook, FaTwitter } from "react-icons/fa";
 import { useSession } from "../hooks/useSession";
 import { MdLocationCity } from "react-icons/md";
-import { db } from "../firebase/firebase";
+import { db, storage } from "../firebase/firebase";
 import moment from "moment";
 import SocialLink from "../components/SocialLink";
 import UserPosts from "../components/UserPosts";
 
 const Profile = () => {
+  const toast = useToast();
   const { user } = useSession();
   const [notSmallerScreen] = useMediaQuery("(min-width:600px)");
   const [userProfile, setUserProfile] = useState(null);
+  const [profileImg, setProfileImg] = useState(null);
+  const [isSelected, setSelected] = useState(false);
+
+  const imgRef = useRef(null);
 
   useEffect(() => {
     const docRef = db.collection("users").doc(user.uid);
@@ -32,7 +41,47 @@ const Profile = () => {
     return () => {
       setUserProfile(null);
     };
-  }, [user.uid]);
+  }, [user.uid, user]);
+
+  const handleClick = (e) => {
+    try {
+      e.preventDefault();
+      if (profileImg) {
+        storage
+          .ref()
+          .child("users")
+          .child(user.uid)
+          .put(profileImg)
+          .then((res) => res.ref.getDownloadURL())
+          .then((photoURL) =>
+            db.collection("users").doc(user.uid).update({ photoURL })
+          )
+          .then(
+            toast({
+              title: "Profile Image Updated",
+              status: "success",
+              isClosable: true,
+              position: "top-right",
+            })
+          );
+      }
+    } catch (err) {
+      toast({
+        title: err.message,
+        status: "error",
+        isClosable: true,
+        position: "top-right",
+      });
+    } finally {
+      setProfileImg(null);
+      setSelected(false);
+    }
+  };
+
+  const handleProfileImgChange = (e) => {
+    setProfileImg(e.target.files[0]);
+    setSelected(true);
+  };
 
   return !!userProfile ? (
     <VStack>
@@ -42,9 +91,25 @@ const Profile = () => {
           src={!!userProfile.photoURL && userProfile.photoURL}
           size={notSmallerScreen ? "2xl" : "xl"}
           mb="3"
+          style={{ opacity: isSelected && "0.3" }}
+          onClick={() => imgRef.current.click()}
         />
+        <VisuallyHidden>
+          <Input
+            type="file"
+            ref={imgRef}
+            accept="image/*"
+            multiple={false}
+            onChange={handleProfileImgChange}
+          />
+        </VisuallyHidden>
+        {isSelected && (
+          <Button onClick={handleClick} colorScheme="teal" size="sm" mb="5">
+            Update Photo
+          </Button>
+        )}
         <VStack spacing="5" maxW={notSmallerScreen ? "xl" : "full"} px="5">
-          <Text fontSize="4xl" fontWeight="bold">
+          <Text fontSize="4xl" fontWeight="bold" mb="-2">
             {userProfile.displayName}
           </Text>
           {userProfile.bio && <Text align="center">{userProfile.bio}</Text>}
