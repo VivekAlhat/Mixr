@@ -8,6 +8,7 @@ import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
 import PasswordReset from "./pages/PasswordReset";
+import PostPage from "./pages/PostPage";
 import ProfileRedirect from "./HOC/ProfileRedirect";
 import PrivateRoute from "./HOC/PrivateRoute";
 import { Switch, Route } from "react-router-dom";
@@ -28,6 +29,7 @@ function App() {
           <PrivateRoute path="/profile" component={Profile} />
           <PrivateRoute path="/dashboard" component={Dashboard} />
           <PrivateRoute path="/settings" component={Settings} />
+          <PrivateRoute path="/posts/:id" component={PostPage} />
           <ProfileRedirect path="/reset" component={PasswordReset} />
           <Route path="*" component={Error} />
         </Switch>

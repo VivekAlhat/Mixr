@@ -4,6 +4,7 @@ import {
   HStack,
   Icon,
   Text,
+  Link,
   useMediaQuery,
   useColorMode,
 } from "@chakra-ui/react";
@@ -12,6 +13,7 @@ import { AiFillLike, AiFillDislike } from "react-icons/ai";
 import { MdMoreHoriz, MdComment } from "react-icons/md";
 import firebase, { db } from "../firebase/firebase";
 import { useSession } from "../hooks/useSession";
+import { Link as RouteLink } from "react-router-dom";
 import DeleteAlert from "./DeleteAlert";
 import moment from "moment";
 
@@ -73,13 +75,13 @@ const Post = ({ post }) => {
     >
       <HStack spacing="5">
         <Avatar
-          name={author.displayName}
+          name={!!author.displayName && author.displayName}
           src={!!author.photoURL && author.photoURL}
           size="md"
         />
         <Box>
           <Text fontSize="lg" fontWeight="semibold">
-            {author.displayName}
+            {!!author.displayName && author.displayName}
           </Text>
           <Text as="em" fontSize="sm">
             {moment(post.createdAt.toDate()).format("LLL")}
@@ -112,10 +114,14 @@ const Post = ({ post }) => {
           />
           <Text>{post.dislikes.length}</Text>
         </HStack>
+
         <HStack align="center" spacing="2">
-          <Icon as={MdComment} w="5" h="5" cursor="pointer" />
+          <Link as={RouteLink} to={`/posts/${post.id}`}>
+            <Icon as={MdComment} w="5" h="5" />
+          </Link>
           <Text>{post.comments.length}</Text>
         </HStack>
+
         {post.createdBy.uid === user.uid && (
           <DeleteAlert icon={<MdMoreHoriz />} deletePost={deletePost} />
         )}
