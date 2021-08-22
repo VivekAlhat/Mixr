@@ -5,6 +5,7 @@ import {
   HStack,
   Spacer,
   Icon,
+  Link,
   VStack,
   useColorMode,
 } from "@chakra-ui/react";
@@ -12,9 +13,14 @@ import { MdDelete } from "react-icons/md";
 import firebase, { db } from "../firebase/firebase";
 import { useSession } from "../hooks/useSession";
 import { useState, useEffect } from "react";
+import { Link as RouteLink } from "react-router-dom";
 
 const Comment = ({ comment, postId }) => {
-  const [author, setAuthor] = useState({ displayName: "", photoURL: "" });
+  const [author, setAuthor] = useState({
+    uid: "",
+    displayName: "",
+    photoURL: "",
+  });
   const { user } = useSession();
   const { colorMode } = useColorMode();
   const isDark = colorMode === "dark";
@@ -49,7 +55,11 @@ const Comment = ({ comment, postId }) => {
           src={!!author && author.photoURL}
         />
         <VStack align="flex-start">
-          <Text fontWeight="semibold">{!!author && author.displayName}</Text>
+          <Text fontWeight="semibold">
+            <Link as={RouteLink} to={`/users/${author.uid}`}>
+              {!!author && author.displayName}
+            </Link>
+          </Text>
           <Text mt="3">{comment.comment}</Text>
         </VStack>
         <Spacer />

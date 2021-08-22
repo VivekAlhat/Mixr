@@ -30,6 +30,7 @@ function App() {
           <PrivateRoute path="/dashboard" component={Dashboard} />
           <PrivateRoute path="/settings" component={Settings} />
           <PrivateRoute path="/posts/:id" component={PostPage} />
+          <PrivateRoute path="/users/:id" component={Profile} />
           <ProfileRedirect path="/reset" component={PasswordReset} />
           <Route path="*" component={Error} />
         </Switch>

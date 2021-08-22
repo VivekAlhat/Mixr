@@ -107,7 +107,7 @@ const Settings = () => {
           </Text>
           <Divider />
           <Input
-            placeholder="Display Name"
+            placeholder={!!user ? user.displayName : "Display Name"}
             size="md"
             name="displayName"
             autoComplete="off"
@@ -115,7 +115,7 @@ const Settings = () => {
             onChange={handleChange}
           />
           <Textarea
-            placeholder="Your Bio"
+            placeholder={!!user ? user.bio : "Bio"}
             size="md"
             resize="none"
             name="bio"
@@ -130,7 +130,7 @@ const Settings = () => {
             />
             <Input
               type="email"
-              placeholder="Your Email"
+              placeholder={!!user ? user.email : "Email"}
               name="email"
               autoComplete="off"
               value={formData.email}
@@ -144,7 +144,7 @@ const Settings = () => {
             />
             <Input
               type="text"
-              placeholder="Your Location"
+              placeholder={!!user ? user.location : "Location"}
               name="location"
               autoComplete="off"
               value={formData.location}

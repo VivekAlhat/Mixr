@@ -3,18 +3,17 @@ import { usePosts } from "../hooks/usePosts";
 import { useSession } from "../hooks/useSession";
 import Post from "./Post";
 
-const UserPosts = () => {
+const UserPosts = ({ id }) => {
   const { posts } = usePosts();
   const { user } = useSession();
+  const userId = !!id ? id : user.uid;
 
   return (
     <VStack spacing="5" my="5" px="5">
       {!!posts &&
         posts.map(
           (post) =>
-            post.createdBy.uid === user.uid && (
-              <Post post={post} key={post.id} />
-            )
+            post.createdBy.uid === userId && <Post post={post} key={post.id} />
         )}
     </VStack>
   );

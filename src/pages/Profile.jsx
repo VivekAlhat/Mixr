@@ -18,12 +18,14 @@ import { FaInstagram, FaFacebook, FaTwitter } from "react-icons/fa";
 import { useSession } from "../hooks/useSession";
 import { MdLocationCity } from "react-icons/md";
 import { db, storage } from "../firebase/firebase";
+import { useParams } from "react-router-dom";
 import moment from "moment";
 import SocialLink from "../components/SocialLink";
 import UserPosts from "../components/UserPosts";
 
 const Profile = () => {
   const toast = useToast();
+  const { id } = useParams();
   const { user } = useSession();
   const [notSmallerScreen] = useMediaQuery("(min-width:600px)");
   const [userProfile, setUserProfile] = useState(null);
@@ -31,9 +33,10 @@ const Profile = () => {
   const [isSelected, setSelected] = useState(false);
 
   const imgRef = useRef(null);
+  const docId = !!id ? id : user.uid;
 
   useEffect(() => {
-    const docRef = db.collection("users").doc(user.uid);
+    const docRef = db.collection("users").doc(docId);
     docRef
       .get()
       .then((document) => document.exists && setUserProfile(document.data()));
@@ -41,7 +44,7 @@ const Profile = () => {
     return () => {
       setUserProfile(null);
     };
-  }, [user.uid, user]);
+  }, [user.uid, user, docId]);
 
   const handleClick = (e) => {
     try {
@@ -144,7 +147,7 @@ const Profile = () => {
             )}
           </HStack>
         </VStack>
-        <UserPosts />
+        <UserPosts id={docId} />
       </Flex>
     </VStack>
   ) : (

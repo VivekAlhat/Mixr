@@ -22,7 +22,11 @@ const Post = ({ post }) => {
   const { colorMode } = useColorMode();
   const isDark = colorMode === "dark";
   const [notSmallerScreen] = useMediaQuery("(min-width:600px)");
-  const [author, setAuthor] = useState({ displayName: "", photoURL: "" });
+  const [author, setAuthor] = useState({
+    uid: "",
+    displayName: "",
+    photoURL: "",
+  });
 
   useEffect(() => {
     db.collection("users")
@@ -81,7 +85,9 @@ const Post = ({ post }) => {
         />
         <Box>
           <Text fontSize="lg" fontWeight="semibold">
-            {!!author.displayName && author.displayName}
+            <Link as={RouteLink} to={`/users/${author.uid}`}>
+              {!!author.displayName && author.displayName}
+            </Link>
           </Text>
           <Text as="em" fontSize="sm">
             {moment(post.createdAt.toDate()).format("LLL")}

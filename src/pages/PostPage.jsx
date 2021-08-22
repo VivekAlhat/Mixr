@@ -13,6 +13,7 @@ import {
   Divider,
   Button,
   Center,
+  Spinner,
 } from "@chakra-ui/react";
 
 const PostPage = () => {
@@ -49,7 +50,7 @@ const PostPage = () => {
     }
   };
 
-  return (
+  return !!post ? (
     <Center>
       <VStack spacing="5" px={notSmallerScreen ? "16" : "5"} w="max-content">
         {!!post && <Post post={post} />}
@@ -74,6 +75,10 @@ const PostPage = () => {
         <Divider pt="1" />
         <Comments postId={params.id} />
       </VStack>
+    </Center>
+  ) : (
+    <Center height="80vh" alignSelf="center">
+      <Spinner />
     </Center>
   );
 };
