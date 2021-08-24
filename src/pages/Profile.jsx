@@ -95,7 +95,7 @@ const Profile = () => {
           size={notSmallerScreen ? "2xl" : "xl"}
           mb="3"
           style={{ opacity: isSelected && "0.3" }}
-          onClick={() => imgRef.current.click()}
+          onClick={() => !!id === false && imgRef.current.click()}
         />
         <VisuallyHidden>
           <Input
@@ -107,7 +107,7 @@ const Profile = () => {
           />
         </VisuallyHidden>
         {isSelected && (
-          <Button onClick={handleClick} colorScheme="teal" size="sm" mb="5">
+          <Button onClick={handleClick} colorScheme="teal" size="sm" my="3">
             Update Photo
           </Button>
         )}

@@ -52,7 +52,31 @@ const Post = ({ post }) => {
     }
     await db
       .doc(`posts/${post.id}`)
-      .update({ likes: firebase.firestore.FieldValue.arrayUnion(user.uid) });
+      .update({ likes: firebase.firestore.FieldValue.arrayUnion(user.uid) })
+      .then(async () => {
+        const likedData = {
+          post: post.id,
+          action: "like",
+          user,
+        };
+        if ((await db.doc(`notifications/${author.uid}`).get()).exists) {
+          await db
+            .collection("notifications")
+            .doc(author.uid)
+            .update({
+              notifications:
+                firebase.firestore.FieldValue.arrayUnion(likedData),
+            });
+        } else {
+          await db
+            .collection("notifications")
+            .doc(author.uid)
+            .set({
+              notifications:
+                firebase.firestore.FieldValue.arrayUnion(likedData),
+            });
+        }
+      });
   };
 
   const dislikePost = async () => {

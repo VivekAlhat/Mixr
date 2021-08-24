@@ -11,6 +11,7 @@ import { Link, useHistory } from "react-router-dom";
 import { MdSettings, MdDashboard } from "react-icons/md";
 import { FaSignOutAlt } from "react-icons/fa";
 import { signOut } from "../firebase/auth";
+import Notifications from "./Notifications";
 
 const MenuOptions = ({ displayName, photoURL }) => {
   const history = useHistory();
@@ -43,6 +44,9 @@ const MenuOptions = ({ displayName, photoURL }) => {
         </MenuItem>
         <MenuDivider />
         <MenuGroup>
+          <MenuItem>
+            <Notifications />
+          </MenuItem>
           <MenuItem icon={<MdDashboard />} as={Link} to="/dashboard">
             Dashboard
           </MenuItem>
