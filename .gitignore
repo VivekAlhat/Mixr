@@ -9,6 +9,8 @@
 /coverage
 
 # production
+.firebase
+.github
 /build
 /src/config
 
