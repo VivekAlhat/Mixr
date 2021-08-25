@@ -17,6 +17,8 @@ Mixr is a simple social media application built using React and Firebase.
 - Update profile picture
 - See post notifications in real-time
 - Dark mode
+- Private routes and redirects
+- Error 404 page
 
 ## Features I wanted to use
 
