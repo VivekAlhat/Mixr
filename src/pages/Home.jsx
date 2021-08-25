@@ -1,10 +1,9 @@
-import Wave from "react-wavify";
 import {
   Text,
-  Spacer,
-  Flex,
   Box,
   Button,
+  Flex,
+  Image,
   useMediaQuery,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
@@ -12,28 +11,26 @@ import { motion } from "framer-motion";
 
 const Home = () => {
   const [notSmallerScreen] = useMediaQuery("(min-width:600px)");
-  const MotionText = motion(Text);
+  const MotionBox = motion(Box);
+  const MotionImage = motion(Image);
 
   return (
-    <Flex direction="column">
-      <Box
+    <Flex direction={!notSmallerScreen && "column"}>
+      <MotionBox
         p={notSmallerScreen ? "5rem" : "5"}
         boxSizing="sm"
-        w={notSmallerScreen ? "4xl" : "fit-content"}
+        w={notSmallerScreen ? "3xl" : "fit-content"}
+        initial={{ y: "-200vw" }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", duration: 1.5, bounce: "0.2" }}
       >
-        <MotionText
-          fontSize="7xl"
-          fontWeight="extrabold"
-          initial={{ x: "-200vw" }}
-          animate={{ x: 0 }}
-          transition={{ type: "spring", duration: 1, bounce: "0.2" }}
-        >
+        <Text fontSize="7xl" fontWeight="extrabold">
           Mixr
-        </MotionText>
+        </Text>
         <Text fontSize="xl" fontWeight="semibold">
           Meet | Connect | Socialize
         </Text>
-        <Text fontSize="md" mt="2">
+        <Text fontSize="md" mt="5">
           Mixr is an abbreviation of/for <Text as="em">Mixer</Text>. Mixr is a
           React and Firebase powered simple social media application. Users can
           sign up in just few steps and start using the application. You can
@@ -45,20 +42,17 @@ const Home = () => {
             Get Started
           </Button>
         </Link>
-      </Box>
-      <Spacer />
-      <Box position="fixed" bottom="-5" left="0" w="full">
-        <Wave
-          fill="#5089C6"
-          paused={false}
-          options={{
-            height: 5,
-            amplitude: 20,
-            speed: 0.25,
-            points: 3,
-          }}
-        />
-      </Box>
+      </MotionBox>
+      <MotionImage
+        display={!notSmallerScreen && "none"}
+        src="assets/lost_online.svg"
+        boxSize="30rem"
+        p="16"
+        alignSelf="center"
+        initial={{ y: "-200vw" }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", duration: 1.5, bounce: "0.2" }}
+      />
     </Flex>
   );
 };

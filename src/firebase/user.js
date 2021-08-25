@@ -7,11 +7,12 @@ export const createUserDocument = async (user, fname, lname) => {
   const snapshot = await docRef.get();
 
   if (!snapshot.exists) {
-    const { uid, email, photoURL } = user;
+    const { uid, email, displayName, photoURL } = user;
+    const uname = !!displayName ? displayName : fname + " " + lname;
     const createdAt = new Date();
     const userProfile = {
       uid,
-      displayName: fname + " " + lname,
+      displayName: uname,
       email,
       photoURL,
       createdAt,
