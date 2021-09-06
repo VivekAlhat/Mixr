@@ -1,6 +1,6 @@
 import { db } from "./firebase";
 
-export const createUserDocument = async (user, fname, lname) => {
+export const createUserDocument = async (user) => {
   if (!user) return;
 
   const docRef = db.doc(`/users/${user.uid}`);
@@ -8,11 +8,10 @@ export const createUserDocument = async (user, fname, lname) => {
 
   if (!snapshot.exists) {
     const { uid, email, displayName, photoURL } = user;
-    const uname = !!displayName ? displayName : fname + " " + lname;
     const createdAt = new Date();
     const userProfile = {
       uid,
-      displayName: uname,
+      displayName,
       email,
       photoURL,
       createdAt,
