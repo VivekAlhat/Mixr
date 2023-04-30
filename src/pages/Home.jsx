@@ -15,7 +15,7 @@ const Home = () => {
   const MotionImage = motion(Image);
 
   return (
-    <Flex direction={!notSmallerScreen && "column"}>
+    <Flex direction={!notSmallerScreen && "column"} align="center" justify="center">
       <MotionBox
         p={notSmallerScreen ? "5rem" : "5"}
         boxSizing="sm"
